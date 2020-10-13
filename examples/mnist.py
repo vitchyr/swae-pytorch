@@ -125,9 +125,13 @@ def main():
         plt.savefig('{}/test_latent_epoch_{}.png'.format(imagesdir, epoch + 1))
         plt.close()
         # save sample input and reconstruction
-        vutils.save_image(x, '{}/test_samples_epoch_{}.png'.format(imagesdir, epoch + 1))
+        vutils.save_image(x, '{}/test_original_epoch_{}.png'.format(imagesdir, epoch + 1))
         vutils.save_image(batch['decode'].detach(),
                           '{}/test_reconstructions_epoch_{}.png'.format(imagesdir, epoch + 1),
+                          normalize=True)
+        batch_size = x.size(0)
+        vutils.save_image(model.decoder(distribution_fn(batch_size).to(device)).detach(),
+                          '{}/test_model_samples_epoch_{}.png'.format(imagesdir, epoch + 1),
                           normalize=True)
 
 
